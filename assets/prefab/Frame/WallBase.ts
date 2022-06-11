@@ -1,28 +1,9 @@
-import { BoxCollider2D, Component, math, UITransformComponent } from "cc";
+import { _decorator, Component, Node } from "cc";
+import { BoxBase } from "../../component/BoxBase";
+const { ccclass, property } = _decorator;
 
-export class WallBase extends Component {
-  protected thickness = 1;
-
-  protected get boxCollider2D(): BoxCollider2D {
-    return this.node.getComponent(BoxCollider2D);
-  }
-
-  protected get uiTransform(): UITransformComponent {
-    return this.node.getComponent(UITransformComponent);
-  }
-
-  protected get parentUiTransform(): UITransformComponent {
-    return this.node.parent.getComponent(UITransformComponent);
-  }
-
-  protected setPosition(x: number, y: number): void {
-    this.node.position = new math.Vec3(x, y);
-  }
-
-  protected setSize(width: number, height: number): void {
-    const size = new math.Size(width, height);
-    this.uiTransform.contentSize = size;
-    this.boxCollider2D.size = size;
-    this.boxCollider2D.apply();
-  }
+@ccclass("WallBase")
+export class WallBase extends BoxBase {
+  @property(Number)
+  protected thickness: number = 1;
 }

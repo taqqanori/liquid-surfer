@@ -1,4 +1,4 @@
-import { _decorator, math } from "cc";
+import { _decorator } from "cc";
 import { WallBase } from "./WallBase";
 const { ccclass } = _decorator;
 
