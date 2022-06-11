@@ -14,7 +14,7 @@ export class Mover extends BoxBase {
   update(deltaTime: number) {
     this.t += deltaTime;
     while (2 * Math.PI < this.frequency * this.t) {
-      this.t -= 2 * Math.PI;
+      this.t -= (2 * Math.PI) / this.frequency;
     }
     this.setPosition(
       ((this.parentUiTransform.width - this.uiTransform.width) / 2) *
