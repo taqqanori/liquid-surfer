@@ -41,10 +41,5 @@ export class Surfer extends BoxBase {
         this.node.rotation.getEulerAngles(new math.Vec3()).z * (Math.PI / 180)
       )
     );
-    console.log(
-      new math.Vec2(deltaTime * this.acceleration * this.direction, 0).rotate(
-        this.node.rotation.getEulerAngles(new math.Vec3()).z * (Math.PI / 180)
-      )
-    );
   }
 }
