@@ -1,8 +1,19 @@
-import { BoxCollider2D, Component, math, UITransformComponent } from "cc";
+import {
+  BoxCollider2D,
+  Component,
+  math,
+  RigidBody2D,
+  Sprite,
+  UITransformComponent,
+} from "cc";
 
 export class BoxBase extends Component {
   protected get boxCollider2D(): BoxCollider2D {
     return this.node.getComponent(BoxCollider2D);
+  }
+
+  protected get rigitBody2D(): RigidBody2D {
+    return this.node.getComponent(RigidBody2D);
   }
 
   protected get uiTransform(): UITransformComponent {
@@ -11,6 +22,10 @@ export class BoxBase extends Component {
 
   protected get parentUiTransform(): UITransformComponent {
     return this.node.parent.getComponent(UITransformComponent);
+  }
+
+  protected get sprite(): Sprite {
+    return this.node.getComponent(Sprite);
   }
 
   protected setPosition(x: number, y: number): void {
