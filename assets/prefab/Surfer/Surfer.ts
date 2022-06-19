@@ -1,16 +1,19 @@
 import {
   _decorator,
+  Component,
+  Node,
   input,
   Input,
   EventMouse,
   UITransformComponent,
   math,
+  RigidBody2D,
+  SpriteComponent,
 } from "cc";
-import { BoxBase } from "../../component/BoxBase";
 const { ccclass, property } = _decorator;
 
 @ccclass("Surfer")
-export class Surfer extends BoxBase {
+export class Surfer extends Component {
   @property(UITransformComponent)
   private field: UITransformComponent;
   @property(Number)
@@ -18,6 +21,7 @@ export class Surfer extends BoxBase {
   private direction: -1 | 0 | 1 = 0;
 
   start() {
+    this.hideFires();
     input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
     input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
   }
@@ -27,19 +31,53 @@ export class Surfer extends BoxBase {
     input.off(Input.EventType.MOUSE_UP, this.onMouseUp, this);
   }
 
+  private get surfer(): Node {
+    return this.node.getChildByName("Surfer");
+  }
+
+  private get surferRigidBody(): RigidBody2D {
+    return this.surfer.getComponent(RigidBody2D);
+  }
+
+  private get leftFireSprite(): SpriteComponent {
+    return this.node.getChildByName("LeftFire").getComponent(SpriteComponent);
+  }
+
+  private get rightFireSprite(): SpriteComponent {
+    return this.node.getChildByName("RightFire").getComponent(SpriteComponent);
+  }
+
+  private hideFires(): void {
+    this.leftFireSprite.enabled = false;
+    this.rightFireSprite.enabled = false;
+  }
+
   private onMouseDown(e: EventMouse): void {
     this.direction = e.getLocationX() < this.field.width / 2 ? 1 : -1;
+    const scale = this.node.scale;
+    this.node.scale.set(this.direction, scale.y, scale.z);
+    this.hideFires();
+    switch (this.direction) {
+      case -1:
+        this.rightFireSprite.enabled = true;
+        break;
+      case 1:
+        this.leftFireSprite.enabled = true;
+    }
   }
 
   private onMouseUp(e: EventMouse): void {
     this.direction = 0;
+    this.leftFireSprite.enabled = false;
+    this.rightFireSprite.enabled = false;
   }
 
   update(deltaTime: number) {
-    this.rigitBody2D.linearVelocity = this.rigitBody2D.linearVelocity.add(
-      new math.Vec2(deltaTime * this.acceleration * this.direction, 0).rotate(
-        this.node.rotation.getEulerAngles(new math.Vec3()).z * (Math.PI / 180)
-      )
-    );
+    this.surferRigidBody.linearVelocity =
+      this.surferRigidBody.linearVelocity.add(
+        new math.Vec2(deltaTime * this.acceleration * this.direction, 0).rotate(
+          this.node.rotation.getEulerAngles(new math.Vec3()).z * (Math.PI / 180)
+        )
+      );
   }
 }
