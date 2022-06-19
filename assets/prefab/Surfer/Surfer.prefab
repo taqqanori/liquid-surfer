@@ -130,7 +130,7 @@
     "__prefab": {
       "__id__": 4
     },
-    "velocity": 10,
+    "acceleration": 10,
     "_id": ""
   },
   {
@@ -243,7 +243,7 @@
     "fileId": "12kiXtTfVNMZI/tutWBq8F"
   },
   {
-    "__type__": "cc.BoxCollider2D",
+    "__type__": "cc.CircleCollider2D",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -255,7 +255,7 @@
     },
     "tag": 0,
     "_group": 1,
-    "_density": 0.5,
+    "_density": 1,
     "_sensor": false,
     "_friction": 0.2,
     "_restitution": 0,
@@ -264,16 +264,12 @@
       "x": 0,
       "y": 0
     },
-    "_size": {
-      "__type__": "cc.Size",
-      "width": 50,
-      "height": 50
-    },
+    "_radius": 25,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "77XVO1aNJGBKCukxsw54sF"
+    "fileId": "51me8RlhlLsqhoYp9MAXga"
   },
   {
     "__type__": "cc.PrefabInfo",
