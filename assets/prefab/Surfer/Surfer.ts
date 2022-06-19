@@ -68,8 +68,7 @@ export class Surfer extends Component {
 
   private onMouseUp(e: EventMouse): void {
     this.direction = 0;
-    this.leftFireSprite.enabled = false;
-    this.rightFireSprite.enabled = false;
+    this.hideFires();
   }
 
   update(deltaTime: number) {
