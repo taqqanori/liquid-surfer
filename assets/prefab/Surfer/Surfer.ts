@@ -55,7 +55,7 @@ export class Surfer extends Component {
   private onMouseDown(e: EventMouse): void {
     this.direction = e.getLocationX() < this.field.width / 2 ? 1 : -1;
     const scale = this.node.scale;
-    this.node.scale.set(this.direction, scale.y, scale.z);
+    this.surfer.scale.set(this.direction, scale.y, scale.z);
     this.hideFires();
     switch (this.direction) {
       case -1:
