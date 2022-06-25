@@ -4,7 +4,6 @@ import {
   Node,
   input,
   Input,
-  EventMouse,
   UITransformComponent,
   math,
   RigidBody2D,
@@ -22,13 +21,17 @@ export class Surfer extends Component {
 
   start() {
     this.hideFires();
-    input.on(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
-    input.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
+    input.on(Input.EventType.MOUSE_DOWN, this.startFire, this);
+    input.on(Input.EventType.TOUCH_START, this.startFire, this);
+    input.on(Input.EventType.MOUSE_UP, this.endFire, this);
+    input.on(Input.EventType.TOUCH_END, this.endFire, this);
   }
 
   onDestroy() {
-    input.off(Input.EventType.MOUSE_DOWN, this.onMouseDown, this);
-    input.off(Input.EventType.MOUSE_UP, this.onMouseUp, this);
+    input.off(Input.EventType.MOUSE_DOWN, this.startFire, this);
+    input.off(Input.EventType.TOUCH_START, this.startFire, this);
+    input.off(Input.EventType.MOUSE_UP, this.endFire, this);
+    input.off(Input.EventType.TOUCH_END, this.endFire, this);
   }
 
   private get surfer(): Node {
@@ -52,7 +55,7 @@ export class Surfer extends Component {
     this.rightFireSprite.enabled = false;
   }
 
-  private onMouseDown(e: EventMouse): void {
+  private startFire(e: { getLocationX: () => number }): void {
     this.direction = e.getLocationX() < this.field.width / 2 ? 1 : -1;
     const scale = this.node.scale;
     this.surfer.scale.set(this.direction, scale.y, scale.z);
@@ -66,7 +69,7 @@ export class Surfer extends Component {
     }
   }
 
-  private onMouseUp(e: EventMouse): void {
+  private endFire(): void {
     this.direction = 0;
     this.hideFires();
   }
