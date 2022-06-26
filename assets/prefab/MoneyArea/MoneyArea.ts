@@ -14,6 +14,7 @@ const { ccclass, property } = _decorator;
 @ccclass("MoneyArea")
 export class MoneyArea extends Component {
   public moneyCount = 0;
+  public started = true;
   @property(Number)
   private otherColliderTag: number;
   @property(Number)
@@ -31,6 +32,11 @@ export class MoneyArea extends Component {
   }
 
   update(deltaTime: number) {
+    this.money.active = this.started;
+    if (!this.started) {
+      this.timeAfterMoneyRelocateSeconds = 0;
+      return;
+    }
     this.timeAfterMoneyRelocateSeconds += deltaTime;
     if (
       this.moneyRelocationIntervalSeconds <

@@ -4,14 +4,19 @@ const { ccclass, property } = _decorator;
 
 @ccclass("Mover")
 export class Mover extends BoxBase {
+  public started = true;
   @property(Number)
   private frequency = 1;
   private t = 0;
+
   start() {
     this.setSize(this.parentUiTransform.height, this.parentUiTransform.height);
   }
 
   update(deltaTime: number) {
+    if (!this.started) {
+      return;
+    }
     this.t += deltaTime;
     while (2 * Math.PI < this.frequency * this.t) {
       this.t -= (2 * Math.PI) / this.frequency;
